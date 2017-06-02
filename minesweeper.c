@@ -41,7 +41,8 @@ bool isValid(int index) {
 int uncover_blank_cell(int row, int col) {
     int value, rows[8], columns[8], i;
 
-    if(table_array[row][col] != 0)
+    bool isError = table_array[row][col] != 0;
+    if(isError)
         return 0; // error
 
     table_array[row][col] += 10; // uncover current cell
