@@ -99,13 +99,17 @@ void print_table() {
             }
             value = table_array[i][j];
 
+	    bool CleanArea = value == 10;
+	    bool ANearMine = value == 11;
+	    bool NearMines = value > 11 && value <= 18;
+
             if((value >= 0 && value <= 8) || value == 0 || value == 99)
                 printf("|X");
-            else if(value == 10) // clean area
+            else if(CleanArea) // clean area
                 printf("|%s%d%s",TEXTCYN, value - 10,BGNRM);
-            else if(value == 11) // the number of near mine is 1
+            else if(ANearMine) // the number of near mine is 1
                 printf("|%s%d%s",TEXTYEL, value - 10,BGNRM);
-            else if(value > 11 && value <= 18) // the number of near mine is greater than 1
+            else if(NearMines) // the number of near mine is greater than 1
                 printf("|%s%d%s",TEXTRED, value - 10,BGNRM);
             else if((value >= 20 && value <= 28) || value == 100)
                 printf("|%sF%s",TEXTGRN,BGNRM);
@@ -255,7 +259,7 @@ check_mode:
                 CursorDirection = getch();
 
                 // arrow direction
-                if(direction == '8') {
+                if(CursorDirection == '8') {
                     // up
                     ycoord = (MAX + --ycoord) % MAX;
                 } else if(CursorDirection == '2') {
