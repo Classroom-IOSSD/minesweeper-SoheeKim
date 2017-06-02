@@ -31,6 +31,12 @@ int xcoord=0, ycoord=0;
 // flag: input mode = 0, flag mode = 1, check mode = 2
 int game_mode=0;
 
+// to prevent negative index and out of bounds
+bool isValid(int index) {
+	bool valid = (rows[index] >= 0 && rows[index] < MAX) && (columns[index] >= 0 && columns[index] < MAX);
+	return valid;
+}
+
 /*This is a recursive function which uncovers blank cells while they are adjacent*/
 int uncover_blank_cell(int row, int col) {
     int value, rows[8], columns[8], i;
@@ -61,7 +67,7 @@ int uncover_blank_cell(int row, int col) {
     for(i = 0; i < 8; i++) {
         value = table_array[rows[i]][columns[i]];
 
-        if( (rows[i] >= 0 && rows[i] < MAX) && (columns[i] >= 0 && columns[i] < MAX) ) {	// to prevent negative index and out of bounds
+        if( isValid(i) ) {	// to prevent negative index and out of bounds
             if(value > 0 && value <= 8)
                 table_array[rows[i]][columns[i]] += 10;										// it is a cell with 1-8 number so we need to uncover
             else if(value == 0)
@@ -173,7 +179,7 @@ new_game:
 
             for(j = 0; j < 8; j++) {
                 value = table_array[rows[j]][columns[j]];
-                if( (rows[j] >= 0 && rows[j] < MAX) && (columns[j] >= 0 && columns[j] < MAX) ) {	// to prevent negative index and out of bounds
+                if(isValid(j)) {	// to prevent negative index and out of bounds
                     if(value != 99)																// to prevent remove mines
                         table_array[rows[j]][columns[j]] += 1;									// sums 1 to each adjacent cell
                 }
